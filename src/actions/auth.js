@@ -55,3 +55,20 @@ export const login = (uid, displayName) => ({
   type: types.login,
   payload: { uid, displayName },
 });
+
+export const logout = () => ({
+  type: types.logout,
+});
+export const startLogout = () => {
+  return (dispatch) => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(logout());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
