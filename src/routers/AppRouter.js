@@ -6,13 +6,15 @@ import { JournalPage } from '../components/Journal/JournalPage';
 import { AuthRouter } from './AuthRouter';
 import { useDispatch } from 'react-redux';
 import { login } from '../actions/auth';
+import PrivateRouter from './PrivateRouter';
+import PublicRoute from './PublicRoute';
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
   const [cheeking, setCheeking] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(({ multiFactor: { user } }) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user?.uid) {
         dispatch(login(user.uid, user.displayName));
         setIsLoggedIn(true);
@@ -30,8 +32,25 @@ export const AppRouter = () => {
     <BrowserRouter>
       <div>
         <Routes>
-          <Route path="/auth/*" element={<AuthRouter />} />
-          <Route exact path="/" element={<JournalPage />} />
+          <Route
+            path="/auth/*"
+            element={
+              <PublicRoute
+                isAuthenticated={isLoggedIn}
+                render={<AuthRouter />}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/"
+            element={
+              <PrivateRouter
+                isAuthenticated={isLoggedIn}
+                render={<JournalPage />}
+              />
+            }
+          />
           <Route path="*" element={<Navigate to="/auth/login" />} />
         </Routes>
       </div>

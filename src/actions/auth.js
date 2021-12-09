@@ -1,5 +1,6 @@
 import { firebase, googleAuthProvider } from '../firebase/firebase-config';
 import { types } from '../types/types';
+import Swal from 'sweetalert2';
 import { finishLoading, startLoading } from './ui';
 export const startLoginEmailPassword = (email, password) => {
   return (dispatch) => {
@@ -11,9 +12,10 @@ export const startLoginEmailPassword = (email, password) => {
         dispatch(login(user.uid, user.displayName));
         dispatch(finishLoading());
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((e) => {
+        console.log(e);
         dispatch(finishLoading());
+        Swal.fire('Error', e.message, 'error');
       });
   };
 };
@@ -28,6 +30,7 @@ export const startRegisterWithNameEmailPassword = (name, email, password) => {
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire('Error', err.message, 'error');
       });
   };
 };
@@ -37,17 +40,9 @@ export const startLoginGoogle = () => {
     firebase
       .auth()
       .signInWithPopup(googleAuthProvider)
-      .then(
-        ({
-          user: {
-            multiFactor: {
-              user: { uid, displayName },
-            },
-          },
-        }) => {
-          dispatch(login(uid, displayName));
-        }
-      );
+      .then((user) => {
+        dispatch(login(user.uid, user.displayName));
+      });
   };
 };
 
