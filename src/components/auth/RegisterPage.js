@@ -50,7 +50,10 @@ export const RegisterPage = () => {
   return (
     <>
       <h3 className="auth__title">Register...</h3>
-      <form onSubmit={handleRegister}>
+      <form
+        onSubmit={handleRegister}
+        className="animate__animated animate__fadeIn animate__faster"
+      >
         {msgError && <div className="auth__alert-error">{msgError}</div>}
         <input
           className="auth__input"
@@ -90,11 +93,10 @@ export const RegisterPage = () => {
         <button type="submit" className="btn btn-primary btn-block mb-5">
           Register
         </button>
+        <Link className="link" to="/auth/login">
+          Already registered?
+        </Link>
       </form>
-
-      <Link className="link" to="/auth/register">
-        Already registered?
-      </Link>
     </>
   );
 };
