@@ -8,8 +8,10 @@ export const NotePage = () => {
   const dispatch = useDispatch();
   const { active } = useSelector((state) => state.notes);
   const [formValues, handleInputChange, reset] = useForm(active);
-  const { body, title, url } = formValues;
+
+  const { body, title } = formValues;
   const activeId = useRef(active.id);
+
   useEffect(() => {
     if (active.id !== activeId.current) {
       reset(active);
@@ -18,8 +20,9 @@ export const NotePage = () => {
   }, [active, reset]);
 
   useEffect(() => {
-    dispatch(activeNote(activeId, { ...formValues }));
+    dispatch(activeNote(formValues.id, { ...formValues }));
   }, [formValues, dispatch]);
+
   return (
     <div className="notes__main-content">
       <NotesAppBar />
@@ -40,9 +43,9 @@ export const NotePage = () => {
           value={body}
           onChange={handleInputChange}
         ></textarea>
-        {url && (
+        {active.url && (
           <div className="notes__image">
-            <img src={`url(${url})`} alt={`${title}`} />
+            <img src={active.url} alt="imagen" />
           </div>
         )}
       </div>
