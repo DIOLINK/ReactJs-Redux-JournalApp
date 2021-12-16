@@ -89,3 +89,32 @@ export const startUploadingPicture = (file) => {
     dispatch(startSaveNote({ ...activeNote, url: fileUrl }));
   };
 };
+
+export const startDeletingNote = (id) => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth;
+    try {
+      Swal.fire({
+        title: 'Deleting...',
+        text: 'Please wait...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      await db.doc(`${uid}/journal/notes/${id}`).delete();
+      dispatch(deleteNote(id));
+      Swal.close();
+    } catch (error) {
+      Swal.close();
+      console.log(`Error to Save note: `, error);
+
+      Swal.fire('Error', error.message, 'error');
+    }
+  };
+};
+
+export const deleteNote = (id) => ({
+  type: types.notesDeleted,
+  payload: id,
+});
