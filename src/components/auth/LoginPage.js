@@ -7,8 +7,8 @@ export const LoginPage = () => {
   const { loading } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const [formValues, handleInputChange, reset] = useForm({
-    email: 'roger@got.com',
-    password: '123456',
+    email: '',
+    password: '',
   });
   const { email, password } = formValues;
 
@@ -57,7 +57,7 @@ export const LoginPage = () => {
         <div className="auth__social-networks">
           <p>Login with social networks</p>
           <div className="google-btn" onClick={handleLoginWithGoogle}>
-            <div className="google-icon-wrapper">
+            <div className="google-icon-wrapper animate__animated animate__infinite	infinite animate__pulse ">
               <img
                 className="google-icon"
                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
