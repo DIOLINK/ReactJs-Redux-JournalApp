@@ -4,12 +4,12 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyDpMa1awPQ9k-b98swLzfz1IdE1LPla-ZU',
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: 'react-app-cursos-c4400.firebaseapp.com',
   projectId: 'react-app-cursos-c4400',
   storageBucket: 'react-app-cursos-c4400.appspot.com',
-  messagingSenderId: '117010035315',
-  appId: '1:117010035315:web:e447e73bdb5b6b54d97006',
+  messagingSenderId: process.env.REACT_APP_MSG_SENDER_ID,
+  appId: process.env.REACT_APP_APPID,
 };
 
 // Initialize Firebase
