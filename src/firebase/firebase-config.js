@@ -12,8 +12,21 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APPID,
 };
 
+const firebaseConfigTesting = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: 'testing-app-b0d5c.firebaseapp.com',
+  projectId: 'testing-app-b0d5c',
+  storageBucket: 'testing-app-b0d5c.appspot.com',
+  messagingSenderId: process.env.REACT_APP_MSG_SENDER_ID,
+  appId: process.env.REACT_APP_APPID,
+};
+
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+if (process.env.NODE_ENV === 'test') {
+  firebase.initializeApp(firebaseConfigTesting);
+} else {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const db = firebase.firestore();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();

@@ -4,7 +4,7 @@ import { fileUpload } from '../helpers/fileUpload';
 import { loadNotes } from '../helpers/loadNotes';
 import { types } from '../types/types';
 
-export const startNewNote = (note) => {
+export const startNewNote = () => {
   return async (dispatch, getState) => {
     const uid = getState().auth.uid;
     const newNote = {
